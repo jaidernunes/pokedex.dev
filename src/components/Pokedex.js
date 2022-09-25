@@ -1,18 +1,41 @@
 import React from 'react';
-import { arrayOf, number } from 'prop-types';
+import { arrayOf } from 'prop-types';
 
 import { pokemonType } from '../types';
 import Pokemon from './Pokemon';
 
 class Pokedex extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pokeIndex: 0,
+    };
+    this.nextPokemon = this.nextPokemon.bind(this);
+  }
+
+  nextPokemon(pkmnMax) {
+    this.setState((state) => ({
+      pokeIndex: (state.pokeIndex + 1) % pkmnMax,
+    }));
+  }
+
   render() {
-    const { pokemonList, pkmnIndex } = this.props;
+    const { pokeIndex } = this.state;
+    const { pokemonList } = this.props;
+
     return (
       <>
         <h1> Pokédex </h1>
         <div className="pokedex">
-          {pokemonList
-            .map((pkmn) => <Pokemon key={ pkmn.id } pokemon={ pkmn } />)[pkmnIndex]}
+          <Pokemon pokemon={ pokemonList[pokeIndex] } />
+          <button
+            type="button"
+            onClick={ () => this.nextPokemon(pokemonList.length) }
+          >
+            Próximo pokémon
+          </button>
+          {/* {pokemonList
+            .map((pokemon) => <Pokemon key={ pokemon.id } pokemon={ pokemon } />)} */}
         </div>
       </>
     );
@@ -21,12 +44,10 @@ class Pokedex extends React.Component {
 
 Pokedex.defaultProps = {
   pokemonList: [],
-  pkmnIndex: 0,
 };
 
 Pokedex.propTypes = {
   pokemonList: arrayOf(pokemonType),
-  pkmnIndex: number,
 };
 
 export default Pokedex;
