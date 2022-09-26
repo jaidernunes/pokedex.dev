@@ -20,10 +20,21 @@ h1 {
   justify-content: space-around;
   margin: 10px;
   min-width: 240px;
+  padding-left: 10px;
 }
 
 .pokedex {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
-  margin: 10px;
+  flex-flow: wrap column;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.buttons {
+  margin-bottom: 3px;
 }
